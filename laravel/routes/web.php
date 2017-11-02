@@ -11,10 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MainController@index')->name('main');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/verifyemail/{token}', 'Auth\RegisterController@verify');
+
+Route::get('/test', function () {
+    return view('test');
+});
