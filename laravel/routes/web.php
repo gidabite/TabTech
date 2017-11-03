@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/verifyemail/{token}', 'Auth\RegisterController@verify');
+Route::get('/resendverification', 'Auth\ResendMailVerificationController@index')->name('resendverification');
 
 Route::get('/test', function () {
     return view('test');

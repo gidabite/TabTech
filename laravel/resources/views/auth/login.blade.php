@@ -11,7 +11,7 @@
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group{{ ($errors->has('email')||Input::get('notVerified') != "") ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
@@ -20,6 +20,12 @@
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+
+                                @if (Input::get('notVerified') != "")
+                                    <span class="help-block has-error">
+                                        <strong>These credentials were not verified by mail. <a href="{{URL::route('resendverification').'?email='.Input::get('notVerified')}}">Retry</a></strong>
                                     </span>
                                 @endif
                             </div>
