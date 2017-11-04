@@ -12,8 +12,8 @@ class ResendMailVerificationController extends Controller
 {
     public function index()
     {
-        $user = User::where('email' , Input::get('email'))->first();
-        if ($user != null){
+        $user = User::where('email', Input::get('email'))->first();
+        if ($user != null) {
             dispatch((new SendVerificationEmail($user))->delay(10));
             return redirect()->route('login');
         }

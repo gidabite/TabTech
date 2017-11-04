@@ -25,7 +25,7 @@
 
                                 @if (Input::get('notVerified') != "")
                                     <span class="help-block has-error">
-                                        <strong>These credentials were not verified by mail. <a href="{{URL::route('resendverification').'?email='.Input::get('notVerified')}}">Retry</a></strong>
+                                        <strong>These credentials were not verified by mail. <a href="{{URL::route('resendverification', ['email' => Input::get('notVerified')])}}">Retry</a></strong>
                                     </span>
                                 @endif
                             </div>

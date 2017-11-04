@@ -15,7 +15,11 @@ class MainController extends Controller
         {
 
             if (Auth::user()->verified == 1){
-
+                if (Auth::user()->isAdmin){
+                    echo "Admin";
+                }else{
+                    echo "User";
+                }
 
             } else{
                 $email = Auth::user()->email;

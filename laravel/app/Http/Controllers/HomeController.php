@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (Auth::user()->verified == 1) {
+            if (Auth::user()->isAdmin) {
+                return view('home.admin');
+            } else {
+                return view('home.user');
+            }
+        } else {
+            $email = Auth::user()->email;
+            Auth::Logout();
+            return redirect()->route('login', ['notVerified' => $email]);
+        }
     }
 }
