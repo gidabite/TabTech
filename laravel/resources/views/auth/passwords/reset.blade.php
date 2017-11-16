@@ -6,18 +6,20 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Reset Password</div>
-
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
+                    @if (Session::has('message'))
+                        <div class="alert alert-danger">{{ Session::get('message') }}</div>
+                    @endif
+                    <form class="form-horizontal" method="POST" action="{{ route('updatepassword') }}">
                         {{ csrf_field() }}
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="token_reset" value="{{ $token }}">
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -53,7 +55,22 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="captcha" class="col-md-4 control-label">Captcha</label>
+                            <div class="col-md-6">
+                                @php
+                                    echo captcha_img()
+                                @endphp
+                                <input  id="captcha" type="text" class="form-control" name="captcha">
 
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

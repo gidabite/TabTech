@@ -61,6 +61,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('secret_question') ? ' has-error' : '' }}">
+                            <label for="secret_question" class="col-md-4 control-label">Secret Question</label>
+                            <div class="col-md-6">
+                                <input id="secret_question" type="text" class="form-control" name="secret_question" required>
+                                @if ($errors->has('secret_question'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('secret_question') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
+                            <label for="answer" class="col-md-4 control-label">Answer</label>
+                            <div class="col-md-6">
+                                <input id="answer" type="text" class="form-control" name="answer" required>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
