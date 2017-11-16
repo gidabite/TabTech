@@ -50,10 +50,16 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'answer' => 'The :attribute field is required.',
+        ];
+
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/|confirmed',
+            'secret_question' => 'required|string',
+            'answer' => 'required|string'
         ]);
     }
 
@@ -69,22 +75,15 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'email_token' => base64_encode($data['email'])
+            'email_token' => base64_encode($data['email']),
+            'secret_question' => $data['secret_question'],
+            'answer' => bcrypt($data['answer'])
         ]);
     }
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
-        dispatch((new SendVerificationEmail($user))->delay(10));
-        return view('verification');
-    }
-    public function verify($token)
-    {
-        $user = User::where('email_token', $token)->first();
-        $user->verified = 1;
-        if ($user->save()) {
-            return view('email.emailconfirm', ['user' => $user]);
-        }
+        return view('welcome');
     }
 }

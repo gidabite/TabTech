@@ -2,11 +2,8 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('create_category'))
+        @if (Session::has('message'))
             <div class="alert alert-info">{{ Session::get('create_category') }}</div>
-        @endif
-        @if (Session::has('update_category'))
-            <div class="alert alert-info">{{ Session::get('update_category') }}</div>
         @endif
         <div class="row">
             <div class="col-md-10 col-md-offset-1">

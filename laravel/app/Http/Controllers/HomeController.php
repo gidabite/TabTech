@@ -24,16 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->verified == 1) {
-            if (Auth::user()->isAdmin) {
-                return view('home.admin');
-            } else {
-                return view('home.user');
-            }
+        if (Auth::user()->isAdmin) {
+            return view('home.admin');
         } else {
-            $email = Auth::user()->email;
-            Auth::Logout();
-            return redirect()->route('login', ['notVerified' => $email]);
+            return view('home.user');
         }
     }
 }
