@@ -33,7 +33,7 @@ Route::get('/updatepassword', function () {
 
 Route::resource('categories','CategoryController');
 Route::resource('products','ProductController');
+Route::resource('grandcategories','GrandCategoryController');
 
-Route::get('/test', function () {
-    return view('test');
-});
+Route::post('/ajax', 'AjaxController@category')->name('ajax');
+Route::post('/ajaxImage', 'AjaxController@image')->name('ajaxImage');

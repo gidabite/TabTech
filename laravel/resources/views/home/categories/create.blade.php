@@ -10,15 +10,24 @@
                             <div class="col-lg-2"><a href="{{URL::to('home')}}" class="pull-left btn btn-sm">Back to home</a>
                             </div>
                             <span class="col-lg-4 col-lg-offset-2">
-                                New Category
+                                New Subategory
                             </span>
                         </div>
                     </div>
                     <div class="panel-body">
                         {{ Form::open(array('url' => 'categories')) }}
                             <div class="input-group">
+                                <span class="input-group-addon" id="name-category">Subcategory name</span>
+                                {{Form::text('name', null, array('class' => 'form-control', 'aria-describedby' => 'name-category', 'placeholder' => 'Enter subcategory name', 'required'))}}
+                            </div>
+                            <br>
+                            <div class="input-group">
                                 <span class="input-group-addon" id="name-category">Category name</span>
-                                {{Form::text('name', null, array('class' => 'form-control', 'aria-describedby' => 'name-category', 'placeholder' => 'Enter category name', 'required'))}}
+                                @php
+                                    $granscategories = DB::table('grandcategories')->pluck ('name');
+                                    $assoc = array_combine($granscategories->toArray(),$granscategories->toArray());
+                                @endphp
+                                {{Form::select('grandcategory', $assoc, old('grandcategory'), array('placeholder' => 'Please select a grandcategory', 'class' => 'form-control ','aria-describedby' => 'category', 'required'))}}
                             </div>
                             <hr>
                             <h4>Characteristics</h4>

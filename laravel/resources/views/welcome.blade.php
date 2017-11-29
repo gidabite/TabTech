@@ -1,95 +1,115 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+    <!--banner-starts-->
+    <div class="bnr" id="home" style="margin-bottom:60px;">
+        <div  id="top" class="callbacks_container">
+            <ul class="rslides" id="slider4">
+                <li>
+                    <img src="{{asset('images/bnr-1.jpg')}}" alt=""/>
+                </li>
+                <li>
+                    <img src="{{asset('images/bnr-2.jpg')}}" alt=""/>
+                </li>
+                <li>
+                    <img src="{{asset('images/bnr-3.jpg')}}" alt=""/>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <!--banner-ends-->
+    <!--Slider-Starts-Here-->
+    <script src="js/responsiveslides.min.js"></script>
+    <script>
+        // You can also use "$(window).load(function() {"
+        $(function () {
+            // Slideshow 4
+            $("#slider4").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+        });
+    </script>
+    <!--End-slider-script-->
+    <div class="product">
+        <div class="container">
+            <div class="product-top">
+                @php
+                    $products = DB::table('products')->latest()->limit(8)->get();
+                @endphp
+                <div class="product-one">
+                    @for($i = 0; $i < 4 && $i < count($products); $i++)
+                        <div class="col-md-3 product-left">
+                            <div class="product-main simpleCart_shelfItem">
+                                <a href="{{ URL::to('products/' . $products[$i]->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$products[$i]->src_img_1}}" alt="" /></a>
+                                <div class="product-bottom">
+                                    <h3>{{$products[$i]->name}}</h3>
+                                    <p>Explore Now</p>
+                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                </div>
+                                <div class="srch">
+                                    <span>Get me!</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endfor
+                    <div class="clearfix"></div>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+            </div>
+            <div class="product-top">
+                @php
+                    $products = DB::table('products')->latest()->limit(8)->get();
+                @endphp
+                <div class="product-one">
+                    @for($i = 4; $i < 8 && $i < count($products); $i++)
+                        <div class="col-md-3 product-left">
+                            <div class="product-main simpleCart_shelfItem">
+                                <a href="{{ URL::to('products/' . $products[$i]->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$products[$i]->src_img_1}}" alt="" /></a>
+                                <div class="product-bottom">
+                                    <h3>{{$products[$i]->name}}</h3>
+                                    <p>Explore Now</p>
+                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                </div>
+                                <div class="srch">
+                                    <span>Get me!</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endfor
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+    <!--about-starts-->
+    <div class="about">
+        <div class="container">
+            <div class="about-top grid-1">
+                @foreach(DB::table('grandcategories')->pluck('name', 'description') as  $description => $name )
+                <div class="col-md-4 about-left">
+                    <figure class="effect-bubba">
+                        <img class="img-responsive" src="images/abt-1.jpg" alt=""/>
+                        <figcaption>
+                            <h2>{{$name}}</h2>
+                            <p>{{$description}}</p>
+                        </figcaption>
+                    </figure>
+                </div>
+                @endforeach
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!--about-end-->
+@endsection

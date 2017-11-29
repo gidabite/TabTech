@@ -1,7 +1,6 @@
 <table class="table table-striped table-bordered">
     <thead>
     <tr>
-        <td>ID</td>
         <td>Name</td>
         <td>Options</td>
     </tr>
@@ -9,7 +8,6 @@
     <tbody>
     @foreach($categories as $key => $value)
         <tr>
-            <td>{{ $value->id }}</td>
             <td >{{ $value->name }}</td>
             <td style="max-width: 50px">
                 <a class="btn btn-small btn-success" style="min-width: 100px" href="{{ URL::to('categories/' . $value->id) }}">Show</a>

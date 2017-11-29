@@ -19,6 +19,16 @@
                         <div class="input-group">
                             <span class="input-group-addon" id="name-category">Category name</span>
                             {{Form::text('name', $name, array('class' => 'form-control', 'aria-describedby' => 'name-category', 'required'))}}
+                        </div>                            <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="name-category">Category name</span>
+                            @php
+                                $granscategories = DB::table('grandcategories')->pluck ('name');
+                                $assoc = array_combine($granscategories->toArray(),$granscategories->toArray());
+                                $id_grand = DB::table('grand_sub_categories')->select('id_grand')->where('id_sub', $id)->first()->id_grand;
+                                $name_grand = DB::table('grandcategories')->select('name')->where('id', $id_grand)->first()->name;
+                            @endphp
+                            {{Form::select('grandcategory', $assoc, $name_grand, array('placeholder' => 'Please select a grandcategory', 'class' => 'form-control ','aria-describedby' => 'category', 'required'))}}
                         </div>
                         <hr>
                         <h4>Characteristics</h4>
@@ -61,6 +71,8 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                             @else
+
                                             @endif
                                         </div>
                                     </div>
@@ -83,8 +95,9 @@
 
         var countC = {{count($characteristics)}};
         function changeSelect(id){
+
             if ($('#select'+id).val() == 'list'){
-                if ($('#sel' + id).html() != ""){
+                if ($.trim($('#sel' + id).html()) != ""){
                     currList[id] = $('#sel' + id).html();
                 }
                 if (currList[id] == "" || currList[id] == undefined || currList[id] == "               ") {

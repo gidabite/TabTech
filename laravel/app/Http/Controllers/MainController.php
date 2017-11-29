@@ -14,9 +14,9 @@ class MainController extends Controller
         if (!Auth::guest())
         {
                 if (Auth::user()->isAdmin){
-                    echo "Admin";
+                    //echo "Admin";
                 }else{
-                    echo "User";
+                    //echo "User";
                 }
         }
         return view('welcome');

@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Input;
 use App\Category as Category;
 use Session;
+use Grandcategory;
+use Validator;
+use Illuminate\Validation\Rule;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -30,7 +34,6 @@ class CategoryController extends Controller
         if (Auth::check() && Auth::user()->isAdmin){
             return view('home.categories.create');
         } else return redirect()->route('home');
-
     }
 
     /**
@@ -42,7 +45,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         if (Auth::check() && Auth::user()->isAdmin){
-            if (Input::get('name') != "") {
+            if (Input::get('name') != "" && Input::get('grandcategory')) {
                 $i = 0;
                 $char = (array)null;
                 while ($name = Input::get("char" . $i)) {
@@ -67,10 +70,22 @@ class CategoryController extends Controller
                     $category->name = Input::get('name');
                     $category->json_characteristics = $json_category;
                     $category->save();
-                }
-                Session::flash('message', 'Successfully created category!');
-            }
 
+                    Validator::make($request->all(), [
+                        'grandcategory' => [
+                            'required',
+                            Rule::in(DB::table('grandcategories')->pluck ('name')->toArray()),
+                        ],
+                    ])->validate();
+                    $id_grand = $category = Grandcategory::where('name', Input::get('grandcategory'))->first()->id;
+                    DB::table('grand_sub_categories')->insert([
+                        ['id_sub' => DB::table('categories')->max('id'), 'id_grand' => $id_grand]
+                    ]);
+
+
+                    Session::flash('message', 'Subcategory successfully created!');
+                }
+            }
         }
         return redirect()->route('home');
     }
@@ -121,7 +136,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         if (Auth::check() && Auth::user()->isAdmin){
-            if (Input::get('name') != "") {
+            if (Input::get('name') != "" && Input::get('grandcategory')) {
                 $i = 0;
                 $char = (array)null;
                 while ($name = Input::get("char" . $i)) {
@@ -147,7 +162,19 @@ class CategoryController extends Controller
                         $category->name = Input::get('name');
                         $category->json_characteristics = $json_category;
                         $category->save();
-                        Session::flash('message', 'Successfully updated category!');
+
+                        Validator::make($request->all(), [
+                            'grandcategory' => [
+                                'required',
+                                Rule::in(DB::table('grandcategories')->pluck ('name')->toArray()),
+                            ],
+                        ])->validate();
+                        $id_grand = $category = Grandcategory::where('name', Input::get('grandcategory'))->first()->id;
+                        DB::table('grand_sub_categories')
+                            ->where('id_sub', $id)
+                            ->update(['id_grand' => $id_grand]);
+
+                        Session::flash('message', 'Cubcategory successfully updated!');
                     }
                 }
             }
@@ -167,7 +194,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
             if ($category != null && $id != 1) {
                 $category->delete();
-                Session::flash('message', 'Successfully deleted category!');
+                Session::flash('message', 'Subcategory successfully deleted!');
             }
         }
         return redirect()->route('home');
