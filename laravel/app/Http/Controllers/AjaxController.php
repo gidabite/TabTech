@@ -13,7 +13,6 @@ class AjaxController extends Controller
         if (Input::get('name') != null){
 
             $category = Category::where('name', Input::get('name'))->first();
-
             if ($category != null) {
                 $answer = "";
                 $characteristics = json_decode($category->json_characteristics);

@@ -33,28 +33,47 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li><a class = "navbar-brand" href="{{ url('/') }}"> {{ config('app.name', 'Laravel') }}</a></li>
                 </ul>
             </div>
-            <div class="col-md-6 top-header-left">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @guest
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
+            @guest
+                <div class="col-md-6 top-header-left">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                    </ul>
+                </div>
+                @else
+            <div class="col-md-1 col-md-offset-3 top-header-right">
+                <div class="cart box_1">
+                    <a href="{{route('basket')}}">
+                        <img src="images/cart-1.png" alt="" />
+                    </a>
+                    @php
+                        Cart::instance('cart'.Auth::user()->id)->restore('cart'.Auth::user()->id);
+                    @endphp
+                    <p><a href="javascript:;" class="simpleCart_empty">{{Cart::instance('cart'.Auth::user()->id)->count()}} items</a></p>
+                    @php
+                        Cart::instance('cart'.Auth::user()->id)->store('cart'.Auth::user()->id);
+                    @endphp
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+                    <div class="col-md-2 top-header-left">
+                        <ul class="nav navbar-nav navbar-right">
+                            <!-- Authentication Links -->
                             <li><a href="{{ route('home') }}">My account</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Logout
+                                       onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        Logout
                                 </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
                             </li>
-                            @endguest
-                </ul>
-            </div>
+                        </ul>
+                    </div>
+                @endguest
             <div class="clearfix"></div>
         </div>
     </div>
@@ -64,7 +83,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="header-bottom" >
     <div class="container">
         <div class="header">
-            <div class="col-md-9 header-left">
+            <div class="col-md-6 header-left">
                 <div class="top-nav">
                     <ul class="memenu skyblue">
                         <li class="active"><a href="{{url('/')}}">Home</a></li>
@@ -80,7 +99,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     $subs_name = DB::table('categories')->where('name', '!=', 'All')->whereIn('id', $subs_id)->pluck('name');
                                                 @endphp
                                                 @foreach($subs_name as $name_sub )
-                                                    <li><a href="products.html">{{$name_sub}}</a></li>
+                                                    <li><a href="{{url('/products')}}?category_search={{$name_sub}}">{{$name_sub}}</a></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -88,18 +107,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </div>
                             </div>
                         </li>
+                        <li class="grid"><a href="{{url('/products')}}">All Products</a>
                         <li class="grid"><a href="contact.html">Contact</a>
                         </li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
             </div>
-            <div class="col-md-3 header-right">
-                <div class="search-bar">
-                    <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
-                    <input type="submit" value="">
-                </div>
-            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    @php
+                        $grandcategories = \App\Grandcategory::all();
+                        $options = (array)null;
+                        $options['All'] = 'All Products';
+                        foreach ($grandcategories as $grandcategory){
+                            $subcateg_id = DB::table('grand_sub_categories')->where('id_grand', $grandcategory->id)->pluck('id_sub');
+                            $subcateg = DB::table('categories')->whereIn('id', $subcateg_id)->where('name', '!=', 'All')->pluck('name');
+                            $cat = (array)null;
+                            foreach ($subcateg as $key => $categ){
+                                $cat[$categ] = $categ;
+                            }
+                             $options[$grandcategory->name] = ($cat);
+                        }
+                        $name = 'All'
+                    @endphp
+                    @isset($curr_item)
+                        @php
+                            $name=$curr_item;
+                        @endphp
+                    @endisset
+                    {{Form::open(array('url' => '/products', 'id' => 'search', 'method' => 'get'))}}
+                    {{Form::close()}}
+                        {{Form::select('category_search', $options,  $name, array('form'=>'search', 'class' => 'form-control ', 'required'))}}
+                        <span style="width:0px; padding: 0px; border-width: 0px" class="input-group-addon" title="* Price" id="priceLabel"></span>
+                        <input class="form-control" name = 'q' placeholder='Search' type="text" value="{{Input::get('q')}}" form = 'search'>
+                        <span class="input-group-btn">
+                            <input class="btn btn-default" form = 'search' type="submit" value="Search" class="form-control">
+                        </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
             <div class="clearfix"> </div>
         </div>
     </div>

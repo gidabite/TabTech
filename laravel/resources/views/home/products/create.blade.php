@@ -137,7 +137,7 @@
                                                 </div>
                                         </div>
                                     </h5>
-                                    <a href="#" class="col-md-4 add-cart item_add">ADD TO CART</a>
+                                    <a href="#" class="col-md-4 add-cart item_add text-center">ADD TO CART</a>
                                         @if ($errors->has('price'))
                                             <br>
                                             <span class="help-block has-error">

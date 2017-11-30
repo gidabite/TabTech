@@ -5,8 +5,9 @@
         <div class="container">
             <div class="breadcrumbs-main">
                 <ol class="breadcrumb">
-                    <li><a href="{{url('/')}}">Catalog</a></li>
-                    <li>{{$category}}</li>
+                    <li><a href="{{url('/')}}">Home</a></li>
+                    <li><a href="{{url('/products')}}">Products</a></li>
+                    <li><a href="{{url('/products')}}?category_search={{$category}}">{{$category}}</a></li>
                     <li class="active">{{$name}}</li>
                 </ol>
             </div>

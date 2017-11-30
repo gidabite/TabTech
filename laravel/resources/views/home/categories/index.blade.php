@@ -2,14 +2,14 @@
     <thead>
     <tr>
         <td>Name</td>
-        <td>Options</td>
+        <td style="width: 290px;">Options</td>
     </tr>
     </thead>
     <tbody>
     @foreach($categories as $key => $value)
         <tr>
             <td >{{ $value->name }}</td>
-            <td style="max-width: 50px">
+            <td>
                 <a class="btn btn-small btn-success" style="min-width: 100px" href="{{ URL::to('categories/' . $value->id) }}">Show</a>
                 @if($key != 0)
                     <a class="btn btn-small btn-success" style="min-width: 100px" href="{{ URL::to('categories/' . $value->id . '/edit') }}">Edit</a>

@@ -55,8 +55,12 @@
                                 <a href="{{ URL::to('products/' . $products[$i]->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$products[$i]->src_img_1}}" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3>{{$products[$i]->name}}</h3>
-                                    <p>Explore Now</p>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                    <p>{{$products[$i]->category}}</p>
+
+                                    {{Form::open(array('url' => 'add')) }}
+                                    <h4><button type="submit" style="background-color: white; outline:none;" class="item_add" href="#"><i></i></button> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                    {{Form::hidden('id', $products[$i]->id)}}
+                                    {{Form::close()}}
                                 </div>
                                 <div class="srch">
                                     <span>Get me!</span>
@@ -69,17 +73,17 @@
             </div>
             <div class="product-top">
                 @php
-                    $products = DB::table('products')->latest()->limit(8)->get();
+                    $products = DB::table('products')->inRandomOrder()->limit(8)->get();
                 @endphp
                 <div class="product-one">
                     @for($i = 4; $i < 8 && $i < count($products); $i++)
                         <div class="col-md-3 product-left">
                             <div class="product-main simpleCart_shelfItem">
                                 <a href="{{ URL::to('products/' . $products[$i]->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$products[$i]->src_img_1}}" alt="" /></a>
-                                <div class="product-bottom">
+                                <div class="product-bottom ">
                                     <h3>{{$products[$i]->name}}</h3>
                                     <p>Explore Now</p>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                    <h4><button style="background-color: white; outline:none;" class="item_add" href="#"><i></i></button> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
                                 </div>
                                 <div class="srch">
                                     <span>Get me!</span>
@@ -91,6 +95,26 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                $('.product-one').each(function(){
+                    var highestBox = 0;
+                    var highestBox2 = 0;
+                    $('h3', this).each(function(){
+                        if($(this).height() > highestBox) {
+                            highestBox = $(this).height();
+                        }
+                    });
+                    $('img', this).each(function(){
+                        if($(this).height() > highestBox2) {
+                            highestBox2 = $(this).height();
+                        }
+                    });
+                    $('h3',this).height(highestBox);
+                    $('img',this).height(highestBox2);
+                });
+            });
+        </script>
     </div>
     <!--about-starts-->
     <div class="about">

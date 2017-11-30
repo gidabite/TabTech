@@ -37,3 +37,9 @@ Route::resource('grandcategories','GrandCategoryController');
 
 Route::post('/ajax', 'AjaxController@category')->name('ajax');
 Route::post('/ajaxImage', 'AjaxController@image')->name('ajaxImage');
+
+Route::post('/add','ShoppingController@add')->name('add');
+Route::post('/decrease','ShoppingController@decrease')->name('decrease');
+Route::post('/delete','ShoppingController@delete')->name('delete');
+Route::get('/basket','ShoppingController@basket')->name('basket');
+

@@ -3,7 +3,7 @@
     <tr>
         <td>ID</td>
         <td>Name</td>
-        <td>Options</td>
+        <td  style="width: 290px;">Options</td>
     </tr>
     </thead>
     <tbody>

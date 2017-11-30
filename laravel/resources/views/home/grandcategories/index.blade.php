@@ -2,8 +2,8 @@
     <thead>
     <tr>
         <td style="width: 200px">Name</td>
-        <td style="width: 400px">Description</td>
-        <td>Options</td>
+        <td>Description</td>
+        <td style="min-width: 290px;">Options</td>
     </tr>
     </thead>
     <tbody>
@@ -11,7 +11,7 @@
         <tr>
             <td>{{ $value->name }}</td>
             <td >{{ $value->description }}</td>
-            <td style="max-width: 50px">
+            <td>
                 <a class="btn btn-small btn-success" style="min-width: 100px" href="{{ URL::to('grandcategories/' . $value->id) }}">Show</a>
                 <a class="btn btn-small btn-success" style="min-width: 100px" href="{{ URL::to('grandcategories/' . $value->id . '/edit') }}">Edit</a>
                 {{ Form::open(array('url' => 'grandcategories/' . $value->id, 'style' => 'display: inline; min-width: 100px')) }}

@@ -11,6 +11,7 @@ use Session;
 use  Validator;
 use Illuminate\Validation\Rule;
 use DB;
+use Storage;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return redirect()->route('home');
+        $q = preg_replace('%[^A-Za-zА-Яа-я0-9. ]%', '', (Input::get('q')));
+        if (!Input::has('category_search') || Input::get('category_search') == 'All' || \App\Category::where('name', Input::get('category_search'))->first() == null){
+            $products = Product::search($q, null, true)->get();
+            return view('home.products.products', ['products' => $products]);
+        } else {
+            $products = Product::where('category', Input::get('category_search') )->search($q, null, true)->get();
+            return view('home.products.products', ['products' => $products, 'curr_item' => Input::get('category_search')]);
+        }
+
     }
 
     /**
@@ -79,6 +88,7 @@ class ProductController extends Controller
                     $product->category = Input::get('category');
                     $nextId = DB::table('products')->max('id') + 1;
                     $product->json_characteristics = $json_product;
+                    $product->save();
                     $count_img = 0;
                     for ($i = 1; $i <= 3; $i++) {
 
@@ -88,10 +98,10 @@ class ProductController extends Controller
                             ])->validate();
                             $count_img++;
                             $file = $request->file('image'.$i);
-                            $destinationPath = public_path('images/products/' . $nextId . '/');
+                            $destinationPath = public_path('images/products/' . $product->id . '/');
                             $ext = $file->extension();
                             $path = $file->move($destinationPath, $count_img . '.' . $ext);
-                            $product['src_img_'.$i] = '/images/products/' . $nextId . '/' . $count_img . '.' . $ext;
+                            $product['src_img_'.$i] = '/images/products/' .  $product->id . '/' . $count_img . '.' . $ext;
                         }
                     }
                     $product->save();
@@ -235,6 +245,19 @@ class ProductController extends Controller
         if (Auth::check() && Auth::user()->isAdmin) {
             $product = Product::find($id);
             if ($product != null) {
+                if ($product->src_img_1 != null)
+                {
+                    unlink(public_path($product->src_img_1));
+                }
+                if ($product->src_img_2 != null)
+                {
+                    unlink(public_path($product->src_img_2));
+                }
+                if ($product->src_img_3 != null)
+                {
+                    unlink(public_path($product->src_img_3));
+                }
+                rmdir(public_path('/images/products/'.$id.'/'));
                 $product->delete();
                 Session::flash('message', 'Product successfully deleted!');
             }
