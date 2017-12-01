@@ -16,7 +16,7 @@ class ResetPasswordController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest');
+        //$this->middleware('guest');
     }
 
     public function showSecretQuestion(){
@@ -91,38 +91,39 @@ class ResetPasswordController extends Controller
                                         DB::table('users')
                                             ->where('email', Input::get('email'))
                                             ->update(['password' => bcrypt(Input::get('password'))]);
+                                        Session::flash('message', 'Password changed successfully');
                                         return redirect()->route("login");
                                     } else {
-                                        Session::flash('message', 'Пароль имеет ошибки в формате!');
+                                        Session::flash('message', 'The password has errors in the format! <br><ul><li>At least 8 characters</li><li>Symbols of different registers</li><li>At least one digit</li><li>At least one special character: !$#%</li></ul>');
                                         return view("auth.passwords.reset", ['token' => $db_token[0]->token_reset]);
                                     }
 
                                 } else {
-                                    Session::flash('message', 'Пароли не совпадают!');
+                                    Session::flash('message', 'Passwords do not match');
                                     return view("auth.passwords.reset", ['token' => $db_token[0]->token_reset]);
                                 }
                             } else {
-                                Session::flash('message', $db_token[0]->token_reset . '/n/r' . Input::get('token_reset'));
+                                Session::flash('message', 'Can not change password!');
                                 return redirect()->route("password.request");
                             }
                         } else {
-                            Session::flash('message', 'Невозможно сменить пароль!');
+                            Session::flash('message', 'Can not change password!');
                             return redirect()->route("password.request");
                         }
                     } else {
-                        Session::flash('message', 'Невозможно сменить пароль!');
+                        Session::flash('message', 'Can not change password!');
                         return redirect()->route("password.request");
                     }
                 } else {
-                    Session::flash('message', 'Невозможно сменить пароль!');
+                    Session::flash('message', 'Can not change password!');
                     return redirect()->route("password.request");
                 }
             } else {
-                Session::flash('message', 'Введен неправильный код с картинки!');
+                Session::flash('message', 'Not the correct code from the picture!');
                 return view("auth.passwords.reset", ['token' => Input::has('token_reset')]);
             }
         } else {
-            Session::flash('message', 'Введен неправильный код с картинки!');
+            Session::flash('message', 'Not the correct code from the picture!');
             return view("auth.passwords.reset", ['token' => Input::has('token_reset')]);
         }
     }

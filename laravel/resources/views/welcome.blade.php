@@ -58,7 +58,7 @@
                                     <p>{{$products[$i]->category}}</p>
 
                                     {{Form::open(array('url' => 'add')) }}
-                                    <h4><button type="submit" style="background-color: white; outline:none;" class="item_add" href="#"><i></i></button> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                    <h4><button type="submit" style="background-color: white; outline:none;" class="item_add" href="#"><i></i><span class=" item_price">$ {{$products[$i]->price}} ADD</span></button></h4>
                                     {{Form::hidden('id', $products[$i]->id)}}
                                     {{Form::close()}}
                                 </div>
@@ -82,8 +82,11 @@
                                 <a href="{{ URL::to('products/' . $products[$i]->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$products[$i]->src_img_1}}" alt="" /></a>
                                 <div class="product-bottom ">
                                     <h3>{{$products[$i]->name}}</h3>
-                                    <p>Explore Now</p>
-                                    <h4><button style="background-color: white; outline:none;" class="item_add" href="#"><i></i></button> <span class=" item_price">$ {{$products[$i]->price}}</span></h4>
+                                    <p>{{$products[$i]->category}}</p>
+                                    {{Form::open(array('url' => 'add')) }}
+                                    <h4><button type="submit" style="background-color: white; outline:none;" class="item_add" href="#"><i></i><span class=" item_price">$ {{$products[$i]->price}} ADD</span></button></h4>
+                                    {{Form::hidden('id', $products[$i]->id)}}
+                                    {{Form::close()}}
                                 </div>
                                 <div class="srch">
                                     <span>Get me!</span>
@@ -120,16 +123,25 @@
     <div class="about">
         <div class="container">
             <div class="about-top grid-1">
-                @foreach(DB::table('grandcategories')->pluck('name', 'description') as  $description => $name )
-                <div class="col-md-4 about-left">
-                    <figure class="effect-bubba">
-                        <img class="img-responsive" src="images/abt-1.jpg" alt=""/>
-                        <figcaption>
-                            <h2>{{$name}}</h2>
-                            <p>{{$description}}</p>
-                        </figcaption>
-                    </figure>
-                </div>
+                @php
+                $i = 0
+                @endphp
+                @foreach(DB::table('grandcategories')->limit(3)->pluck('name', 'description') as  $description => $name )
+                    @php
+                        $i++;
+                    @endphp
+
+                <a href="/products?category_search={{$name}}">
+                    <div class="col-md-4 about-left">
+                        <figure class="effect-bubba">
+                            <img class="img-responsive" src="images/abt-{{$i}}.jpg" alt=""/>
+                            <figcaption>
+                                <h2>{{$name}}</h2>
+                                <p>{{$description}}</p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </a>
                 @endforeach
                 <div class="clearfix"></div>
             </div>

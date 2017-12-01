@@ -41,7 +41,10 @@
                                         <div class="product-bottom">
                                             <h3>{{$product->name}}</h3>
                                             <p>{{$product->category}}</p>
-                                            <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ {{$product->price}}</span></h4>
+                                            {{Form::open(array('url' => 'add')) }}
+                                            <h4><button type="submit" style="background-color: white; outline:none;" class="item_add" href="#"><i></i><span class=" item_price">$ {{$product->price}} ADD</span></button></h4>
+                                            {{Form::hidden('id', $product->id)}}
+                                            {{Form::close()}}
                                         </div>
                                         <div class="srch srch1">
                                             <span>Get me!</span>

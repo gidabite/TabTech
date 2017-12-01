@@ -697,11 +697,11 @@ a.mask {
 }
 .product-left:hover .product-bottom h4 span{
 	color:#73B6E1;
-	transition: 0.5s all ease;
-    -webkit-transition: 0.5s all ease;
-    -moz-transition: 0.5s all ease;
-    -o-transition: 0.5s all ease;
-    -ms-transition: 0.5s all ease;
+	transition: 0.01s all ease;
+    -webkit-transition: 0.01s all ease;
+    -moz-transition: 0.01s all ease;
+    -o-transition: 0.01s all ease;
+    -ms-transition: 0.01s all ease;
 }
 .product-left:hover .product-main{
 	border:1px solid #73B6E1;
@@ -1429,7 +1429,7 @@ a.mask {
 .account-bottom {
     margin-top: 2.2em;
 }
-.account-left input[type="text"], .account-left input[type="email"],.account-left input[type="password"] {
+.account-left input[type="text"], .account-left input[type="email"],.account-left input[type="password"], .account-left textarea, .account-left div.list{
     width: 90%;
     margin: 0px;
     color: #000;
@@ -1454,7 +1454,7 @@ a.mask {
     font-family: 'Lato-Regular';
 	margin-right: 20px;
 }
-.address button {
+.address button, .address input[type=submit] {
     background: #73B6E1;
     color: #FFF;
     font-size: 1em;
@@ -1469,7 +1469,7 @@ a.mask {
     outline: none;
 	font-family: 'Lato-Regular';
 }
-.address button:hover {
+.address button:hover, .address input[type=submit]:hover {
     background: #000;
     transition: 0.5s all;
     -webkit-transition: 0.5s all;
@@ -1482,12 +1482,11 @@ a.mask {
 	padding:6em 0px;
 }
 .close1,.close2,.close3{
-	background: url('../images/close.png') no-repeat 0px 0px;
-	cursor: pointer;
-	width: 28px;
+
+	width: 40px;
 	height: 28px;
 	position: absolute;
-    right: 5px;
+    right: 10px;
     top: 10px;
 	-webkit-transition: color 0.2s ease-in-out;
 	-moz-transition: color 0.2s ease-in-out;
@@ -1507,7 +1506,7 @@ ul.unit li {
     width: 25%;
     float: left;
 }
-ul.cart-header li p,ul.cart-header1 li p,ul.cart-header2 li p{
+div.cart-header ul li p, ul.cart-header ul li p, ul.cart-header1 li p,ul.cart-header2 li p{
     font-size: 11px;
     line-height: 1.6em;
     color: #999;
@@ -1519,22 +1518,22 @@ ul.unit li span{
 	font-size:1.2em;
 	text-align:center;
 }
-ul.cart-header, ul.cart-header1 {
+div.cart-header,ul.cart-header, ul.cart-header1 {
     padding: 1em;
     background: #f8f8f8;
     border-bottom: 1px solid #181b2a;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 ul.cart-header2{
 	padding:1em;
 	background:#f8f8f8;
 }
-ul.cart-header li, ul.cart-header1 li, ul.cart-header2 li {
+div.cart-header ul li, ul.cart-header li, ul.cart-header1 li, ul.cart-header2 li {
     display: inline-block;
     width: 25%;
     float: left;
 }
-ul.cart-header li span,ul.cart-header1 li span,ul.cart-header2 li span{
+div.cart-header ul li span, ul.cart-header li span, ul.cart-header1 li span,ul.cart-header2 li span{
 	margin: 2.3em 0 0;
 	display: block;
 	color:#000;
@@ -1675,7 +1674,7 @@ ul.tag-men li {
 ul.tag-men li span.women1 {
     margin-left: 9em;
 }
-a.add-cart {
+button.add-cart, a.add-cart {
     text-decoration: none;
     color: #fff;
     background: #000;
@@ -1684,7 +1683,7 @@ a.add-cart {
     text-transform: uppercase;
     display: inline-block;
 }
-a.add-cart:hover {
+button.add-cart:hover, a.add-cart:hover {
 	background: #73b6e1;
 	transition: 0.5s all;
 	-webkit-transition: 0.5s all;
@@ -2277,7 +2276,7 @@ figure.effect-bubba p {
 .menu_drop > li > a {
     font-size: 13px;
 }
-a.add-cart {
+button.add-cart {
     font-size: 1em;
 }
 .tabs {
@@ -2288,7 +2287,7 @@ a.add-cart {
 .dropdown .selected, .dropdown li {
     font-size: 11px;
 }
-a.add-cart {
+button.add-cart {
     font-size: 13px;
 }
 .menu_drop > li > a {
@@ -3110,3 +3109,9 @@ ul.tag-men {
 	left: 20px;
 }
 /*--media-quaries-end-here--*/
+
+
+
+
+
+

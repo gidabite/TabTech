@@ -78,7 +78,10 @@
                                                     {{$price}}$
                                                 </h5></label>
                                             <div class="col-md-6">
-                                                <a href="#" class="add-cart item_add">ADD TO CART</a>
+                                                {{Form::open(array('url' => 'add', 'style' => 'display: inline;')) }}
+                                                {{Form::hidden('id', $id)}}
+                                                <button type="submit" class="add-cart item_add">ADD TO CART</button>
+                                                {{Form::close()}}
                                             </div>
                                         </div>
                                     </div>

@@ -3,6 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
+        @if (Session::has('message'))
+            <div class="alert alert-info">{{ Session::get('message') }}</div>
+        @endif
         <div class="account-top heading">
             <h2>ACCOUNT</h2>
         </div>

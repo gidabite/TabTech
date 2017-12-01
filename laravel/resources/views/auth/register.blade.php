@@ -85,9 +85,9 @@
                                 <div class="col-md-9">
                                     <input id="password" placeholder="Answer"  type="text" class="" name="answer" value = "{{old('answer')}}" required>
 
-                                    @if ($errors->has('answe'))
+                                    @if ($errors->has('answer'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('answe') }}</strong>
+                                        <strong>{{ $errors->first('answer') }}</strong>
                                     </span>
                                     @endif
                                 </div>

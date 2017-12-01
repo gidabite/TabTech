@@ -8,7 +8,7 @@
                 <div class="panel-heading">Reset Password</div>
                 <div class="panel-body">
                     @if (Session::has('message'))
-                        <div class="alert alert-danger">{{ Session::get('message') }}</div>
+                        <div class="alert alert-danger">{!! Session::get('message') !!}</div>
                     @endif
                     <form class="form-horizontal" method="POST" action="{{ route('updatepassword') }}">
                         {{ csrf_field() }}
@@ -40,9 +40,9 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
+                                <ul><li>At least 8 characters</li><li>Symbols of different registers</li><li>At least one digit</li><li>At least one special character: !$#%</li></ul>
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
                             <div class="col-md-6">

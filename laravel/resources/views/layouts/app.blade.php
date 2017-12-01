@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{asset("/images/logo.png")}}" type="image/x-icon">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
     <!--jQuery(necessary for Bootstrap's JavaScript plugins)-->
@@ -12,8 +13,6 @@
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!--start-menu-->
     <script src="{{ asset('js/simpleCart.min.js') }}"> </script>
@@ -30,36 +29,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="top-header-main">
             <div class="col-md-6 top-header-left">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a class = "navbar-brand" href="{{ url('/') }}"> {{ config('app.name', 'Laravel') }}</a></li>
+                    <li><a class = "navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a></li>
                 </ul>
             </div>
             @guest
                 <div class="col-md-6 top-header-left">
-                    <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                     </ul>
                 </div>
                 @else
-            <div class="col-md-1 col-md-offset-3 top-header-right">
+            <div class="col-md-1 col-md-offset-1 top-header-right">
                 <div class="cart box_1">
                     <a href="{{route('basket')}}">
-                        <img src="images/cart-1.png" alt="" />
+                        <img src="{{asset("images/cart-1.png")}}" alt="" />
                     </a>
                     @php
                         Cart::instance('cart'.Auth::user()->id)->restore('cart'.Auth::user()->id);
                     @endphp
-                    <p><a href="javascript:;" class="simpleCart_empty">{{Cart::instance('cart'.Auth::user()->id)->count()}} items</a></p>
+                    <p><a href="{{route('basket')}}" class="simpleCart_empty">{{Cart::instance('cart'.Auth::user()->id)->count()}} items</a></p>
                     @php
                         Cart::instance('cart'.Auth::user()->id)->store('cart'.Auth::user()->id);
                     @endphp
                     <div class="clearfix"> </div>
                 </div>
             </div>
-                    <div class="col-md-2 top-header-left">
-                        <ul class="nav navbar-nav navbar-right">
+                    <div class="col-md-4 top-header-left">
+                        <ul class="nav navbar-nav navbar-left">
                             <!-- Authentication Links -->
+                            <li><a href="{{ route('history') }}">My history</a></li>
                             <li><a href="{{ route('home') }}">My account</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
@@ -108,7 +108,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </li>
                         <li class="grid"><a href="{{url('/products')}}">All Products</a>
-                        <li class="grid"><a href="contact.html">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -169,11 +168,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="@guest col-md-4 @else col-md-3 @endguest infor-left">
                 <h3>Information</h3>
                 <ul>
-                    <li><a href="#"><p>Specials</p></a></li>
-                    <li><a href="#"><p>New Products</p></a></li>
-                    <li><a href="#"><p>Our Stores</p></a></li>
-                    <li><a href="contact.html"><p>Contact Us</p></a></li>
-                    <li><a href="#"><p>Top Sellers</p></a></li>
+                    <li><a href="/products"><p>Products</p></a></li>
                 </ul>
             </div>
             @guest
@@ -181,11 +176,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="col-md-3 infor-left">
                         <h3>My Account</h3>
                         <ul>
-                            <li><a href="account.html"><p>My Account</p></a></li>
-                            <li><a href="#"><p>My Credit slips</p></a></li>
-                            <li><a href="#"><p>My Merchandise returns</p></a></li>
-                            <li><a href="#"><p>My Personal info</p></a></li>
-                            <li><a href="#"><p>My Addresses</p></a></li>
+                            <li><a href="/home"><p>My Account</p></a></li>
+                            <li><a href="/history"><p>My History</p></a></li>
+                            <li><a href="/basket"><p>My Basket</p></a></li>
                         </ul>
                     </div>
             @endguest
