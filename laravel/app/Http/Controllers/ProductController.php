@@ -101,7 +101,7 @@ class ProductController extends Controller
                             $destinationPath = public_path('images/products/' . $product->id . '/');
                             $ext = $file->extension();
                             $path = $file->move($destinationPath, $count_img . '.' . $ext);
-                            $product['src_img_'.$i] = '/images/products/' .  $product->id . '/' . $count_img . '.' . $ext;
+                            $product['src_img_'.$i] = '/images/products/' .  $product->id . '/' . $i . '.' . $ext;
                         }
                     }
                     $product->save();
@@ -234,7 +234,7 @@ class ProductController extends Controller
                             $destinationPath = public_path('images/products/' . $id . '/');
                             $ext = $file->extension();
                             $path = $file->move($destinationPath, $count_img . '.' . $ext);
-                            $product['src_img_'.$i] = '/images/products/' . $id . '/' . $count_img . '.' . $ext;
+                            $product['src_img_'.$i] = '/images/products/' . $id . '/' . $i . '.' . $ext;
                         }
                     }
                     $product->save();
