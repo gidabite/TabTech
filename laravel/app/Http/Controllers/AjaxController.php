@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Input;
 use App\Category;
+use Auth;
+use DB;
+
 class AjaxController extends Controller
 {
     public function category(Request $request)
@@ -56,6 +59,26 @@ class AjaxController extends Controller
             return response()->json(array('msg' => "/images/tmp/".$file->getFilename()), 200);
         }
         return response()->json(array('msg' => "ddd"), 200);
+
+    }
+
+    public function stars(Request $request)
+    {
+        if (Auth::check()) {
+            if (Input::has('stars') && Input::has('id')) {
+                if (Input::get('stars') >= 1 && Input::get('stars') <= 5 || Product::find(Input::get('id')) != null) {
+                    if (DB::table('reviews')->select('stars')->where('id_user', Auth::user()->id)->where('id_product',Input::get('id'))->first() == null){
+                        DB::table('reviews')->insert(['id_user' => Auth::user()->id, 'id_product' => Input::get('id'), 'stars' => Input::get('stars')]);
+                    } else {
+                        DB::table('reviews')->where('id_user', Auth::user()->id)->where('id_product', Input::get('id'))->update(['stars' => Input::get('stars')]);
+                }
+
+                    return response()->json(array('msg' => (int)(DB::table('reviews')->where('id_product', Input::get('id'))->avg('stars')), 'count' => DB::table('reviews')->where('id_product', Input::get('id'))->count().' customer review. You reviews: '.Input::get('stars')), 200);
+                }
+            }
+            return response()->json(array('msg' => 0), 200);
+        }
+        return response()->json(array('msg' => 0), 200);
 
     }
 }

@@ -49,6 +49,11 @@ Route::get('/ajaxImage', function () {
     abort(404);
 });
 
+Route::post('/ajaxstars', 'AjaxController@stars')->name('ajaxstars');
+Route::get('/ajaxstars', function () {
+    abort(404);
+});
+
 Route::post('/add','ShoppingController@add')->name('add');
 Route::get('/add', function () {
     abort(404);

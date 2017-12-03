@@ -121,8 +121,15 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-            if ($product != null) {
+            if ($product != null && Category::where('name', $product->category)->first() != null) {
                 $characteristics = json_decode($product->json_characteristics);
+                $stars = 0;
+                if (Auth::check()){
+                    $review = DB::table('reviews')->select('stars')->where('id_user', Auth::user()->id)->where('id_product',$id)->first();
+                    if ($review != null){
+                        $stars = $review->stars;
+                    }
+                }
                 return view('home.products.show', [
                     'id' => $product->id,
                     'name' => $product->name,
@@ -132,10 +139,14 @@ class ProductController extends Controller
                     'src_img_1' => $product->src_img_1,
                     'src_img_2' => $product->src_img_2,
                     'src_img_3' => $product->src_img_3,
-                    'characteristics' => $characteristics
+                    'characteristics' => $characteristics,
+                    'stars' => $stars
                 ]);
+            } else {
+                if (Auth::check() && Auth::user()->isAdmin)
+                    Session::flash('message', 'Product #s'.$id.' has errors! Update it!');
             }
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     /**
@@ -245,19 +256,23 @@ class ProductController extends Controller
         if (Auth::check() && Auth::user()->isAdmin) {
             $product = Product::find($id);
             if ($product != null) {
+                $p = false;
                 if ($product->src_img_1 != null)
                 {
                     unlink(public_path($product->src_img_1));
+                    $p = true;
                 }
                 if ($product->src_img_2 != null)
                 {
                     unlink(public_path($product->src_img_2));
+                    $p = true;
                 }
                 if ($product->src_img_3 != null)
                 {
                     unlink(public_path($product->src_img_3));
+                    $p = true;
                 }
-                rmdir(public_path('/images/products/'.$id.'/'));
+                if ($p) rmdir(public_path('/images/products/'.$id.'/'));
                 $product->delete();
                 Session::flash('message', 'Product successfully deleted!');
             }

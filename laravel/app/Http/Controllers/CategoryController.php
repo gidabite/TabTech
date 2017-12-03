@@ -100,12 +100,17 @@ class CategoryController extends Controller
     {
         if (Auth::check() && Auth::user()->isAdmin) {
             $category = Category::find($id);
-            if ($category != null) {
-                $characteristics = json_decode($category->json_characteristics);
-                return view('home.categories.show', ['id' => $category->id, 'name' => $category->name, 'characteristics' => $characteristics]);
+            if ($category != null){
+                $id_grand = DB::table('grand_sub_categories')->select('id_grand')->where('id_sub', $id)->first()->id_grand;
+                if ($grandcategory = DB::table('grandcategories')->select('name')->where('id', $id_grand)->first() != null) {
+                    $characteristics = json_decode($category->json_characteristics);
+                    return view('home.categories.show', ['id' => $category->id, 'name' => $category->name, 'characteristics' => $characteristics]);
+                } else {
+                    Session::flash('message', 'Category #'.$id.' has errors! Update it!');
+                }
             }
         }
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     /**

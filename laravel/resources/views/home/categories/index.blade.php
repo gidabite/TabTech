@@ -7,7 +7,10 @@
     </thead>
     <tbody>
     @foreach($categories as $key => $value)
-        <tr>
+        @php
+            $id_grand = DB::table('grand_sub_categories')->select('id_grand')->where('id_sub', $value->id)->first()->id_grand;
+        @endphp
+        <tr @if($grandcategory = DB::table('grandcategories')->select('name')->where('id', $id_grand)->first() == null) style = "background-color:red;"  @endif>
             <td >{{ $value->name }}</td>
             <td>
                 <a class="btn btn-small btn-success" style="min-width: 100px" href="{{ URL::to('categories/' . $value->id) }}">Show</a>

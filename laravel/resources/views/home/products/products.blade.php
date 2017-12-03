@@ -38,7 +38,7 @@
                                 <div class="col-md-3 product-left p-left">
                                     <div class="product-main simpleCart_shelfItem">
                                         <a href="{{ URL::to('products/' . $product->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$product->src_img_1}}" alt="" /></a>
-                                        <div class="product-bottom">
+                                        <div class="product-bottom" style="padding-left:30px; padding-right: 30px">
                                             <h3>{{$product->name}}</h3>
                                             <p>{{$product->category}}</p>
                                             {{Form::open(array('url' => 'add')) }}

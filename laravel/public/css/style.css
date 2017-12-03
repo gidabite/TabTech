@@ -1601,12 +1601,11 @@ ul.star-footer li {
     color: #000;
 }
 .star-on a:hover {
-    color: #73b6e1;
+    //color: #73b6e1;
 }
 ul.star-footer li i {
-    height: 16px;
+    height: 20px;
     width: 16px;
-    background: url("../images/star.png") no-repeat;
     display: inline-block;
 }
 .review {

@@ -46,14 +46,14 @@
         <div class="container">
             <div class="product-top">
                 @php
-                    $products = DB::table('products')->latest()->limit(8)->get();
+                    $products = DB::table('products')->inRandomOrder()->limit(8)->get();
                 @endphp
                 <div class="product-one">
                     @for($i = 0; $i < 4 && $i < count($products); $i++)
                         <div class="col-md-3 product-left">
                             <div class="product-main simpleCart_shelfItem">
                                 <a href="{{ URL::to('products/' . $products[$i]->id) }}" class="mask"><img class="img-responsive zoom-img" src="{{$products[$i]->src_img_1}}" alt="" /></a>
-                                <div class="product-bottom">
+                                <div class="product-bottom" style="padding-left:30px; padding-right: 30px">
                                     <h3>{{$products[$i]->name}}</h3>
                                     <p>{{$products[$i]->category}}</p>
 
@@ -72,9 +72,6 @@
                 </div>
             </div>
             <div class="product-top">
-                @php
-                    $products = DB::table('products')->inRandomOrder()->limit(8)->get();
-                @endphp
                 <div class="product-one">
                     @for($i = 4; $i < 8 && $i < count($products); $i++)
                         <div class="col-md-3 product-left">

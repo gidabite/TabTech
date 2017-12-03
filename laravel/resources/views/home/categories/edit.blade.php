@@ -26,9 +26,13 @@
                                 $granscategories = DB::table('grandcategories')->pluck ('name');
                                 $assoc = array_combine($granscategories->toArray(),$granscategories->toArray());
                                 $id_grand = DB::table('grand_sub_categories')->select('id_grand')->where('id_sub', $id)->first()->id_grand;
-                                $name_grand = DB::table('grandcategories')->select('name')->where('id', $id_grand)->first()->name;
+
+                                $grandcategory = DB::table('grandcategories')->select('name')->where('id', $id_grand)->first();
+                                if ($grandcategory != null){
+                                    $name_grand = DB::table('grandcategories')->select('name')->where('id', $id_grand)->first()->name;
+                                }
                             @endphp
-                            {{Form::select('grandcategory', $assoc, $name_grand, array('placeholder' => 'Please select a grandcategory', 'class' => 'form-control ','aria-describedby' => 'category', 'required'))}}
+                            {{Form::select('grandcategory', $assoc, (isset($name_grand)?$name_grand:null), array('placeholder' => 'Please select a grandcategory', 'class' => 'form-control ','aria-describedby' => 'category', 'required'))}}
                         </div>
                         <hr>
                         <h4>Characteristics</h4>

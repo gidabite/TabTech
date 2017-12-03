@@ -23,7 +23,7 @@
                                 <ul class="slides">
                                     @if($src_img_1 != null)
                                         <li data-thumb="{{$src_img_1}}">
-                                            <div class="thumb-image"> <img src="{{$src_img_1}}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+                                            <div class="thumb-image"> <img style ="" src="{{$src_img_1}}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
                                         </li>
                                     @endif
                                     @if($src_img_2 != null)
@@ -58,14 +58,15 @@
                                 <h2>{{$name}}</h2>
                                 <div class="star-on">
                                     <ul class="star-footer">
-                                        <li><a href="#"><i> </i></a></li>
-                                        <li><a href="#"><i> </i></a></li>
-                                        <li><a href="#"><i> </i></a></li>
-                                        <li><a href="#"><i> </i></a></li>
-                                        <li><a href="#"><i> </i></a></li>
+                                        <li><a href="#"><i id='star1' onclick="update_review(1)" onmouseout="onMouseOutStars()" onmouseover="onMouseOverStars(1)" class="glyphicon glyphicon-star-empty"> </i></a></li>
+                                        <li><a href="#"><i id='star2' onclick="update_review(2)" onmouseout="onMouseOutStars()" onmouseover="onMouseOverStars(2)" class="glyphicon glyphicon-star-empty"> </i></a></li>
+                                        <li><a href="#"><i id='star3' onclick="update_review(3)" onmouseout="onMouseOutStars()" onmouseover="onMouseOverStars(3)" class="glyphicon glyphicon-star-empty"> </i></a></li>
+                                        <li><a href="#"><i id='star4' onclick="update_review(4)" onmouseout="onMouseOutStars()" onmouseover="onMouseOverStars(4)" class="glyphicon glyphicon-star-empty"> </i></a></li>
+                                        <li><a href="#"><i id='star5' onclick="update_review(5)" onmouseout="onMouseOutStars()" onmouseover="onMouseOverStars(5)" class="glyphicon glyphicon-star-empty"> </i></a></li>
+                                        <input type="hidden" value="{{$id}}" name="id">
                                     </ul>
                                     <div class="review">
-                                        <a href="#"> 1 customer review </a>
+                                        <a href="#"> {{DB::table('reviews')->where('id_product', $id)->count()}} customer review.@guest @else You review: {{$stars}} @endguest</a>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -116,4 +117,35 @@
             </div>
         </div>
     </div>
+    <script>
+        var stars = {{$stars}};
+        $(document).ready(function () {
+            onMouseOutStars();
+        })
+        function onMouseOverStars(i){
+            $('.star-footer li a i').attr('class', 'glyphicon glyphicon-star-empty');
+            $('.star-footer li:nth-child(-n+'+i+') a i').attr('class', 'glyphicon glyphicon-star');
+        }
+        function onMouseOutStars() {
+            $('.star-footer li a i').attr('class', 'glyphicon glyphicon-star-empty');
+            $('.star-footer li:nth-child(-n+'+stars+') a i').attr('class', 'glyphicon glyphicon-star');
+        }
+        function update_review(i){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url:'{{route('ajaxstars')}}',
+                data:{'_token':'{{csrf_token()}}', 'stars':i, 'id':$('input[name=id]').val()},
+                success:function(data){
+                    stars = data.msg;
+                    $('.review a').html(data.count);
+                    onMouseOutStars();
+                }
+            });
+        }
+    </script>
 @endsection

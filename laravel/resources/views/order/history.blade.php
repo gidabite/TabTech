@@ -44,9 +44,18 @@
                             @php
                                 $i++;
                                 $product = Product::find($item['id']);
+                                if ($product === null){
+                                   continue;
+                                }
                             @endphp
                                     <div class="row">
-                                        <a href="/products/{{$product->id}}"><div class="col-md-1" style="    padding: 10px;" ><img style = "width:100%" src="{{$product->src_img_1}}"></div></a><div class="col-md-3" style="    padding: 20px;" class="name">{{$product->name}}</div><div style="    padding: 20px;" class="col-md-4">${{$product->price}}x{{$item['qty']}}</div><div  style="    padding: 20px;" class="col-md-4">${{$item['subtotal']   }}</div>
+                                        <a href="/products/{{$product->id}}">
+                                            <div class="col-md-1" style="    padding: 10px;" >
+                                                <img style = "width:100%" src="{{$product->src_img_1}}">
+                                            </div></a>
+                                        <div class="col-md-3" style="    padding: 20px;" class="name">{{$product->name}}</div>
+                                        <div style="    padding: 20px;" class="col-md-4">${{$product->price}}x{{$item['qty']}}</div>
+                                        <div  style="    padding: 20px;" class="col-md-4">${{$item['subtotal']   }}</div>
                                     </div>
                         @endforeach
 

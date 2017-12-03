@@ -119,6 +119,6 @@ class ShoppingController extends Controller
             $orders = Order::where('id_user', Auth::user()->id)->get();
             return view('order.history', ['orders' => $orders]);
         }
-        //return redirect('/');
+        return redirect('/');
     }
 }
