@@ -63,9 +63,9 @@
                                 @endphp
                                 <input  id="captcha" type="text" class="form-control" name="captcha">
 
-                                @if ($errors->has('password_confirmation'))
+                                @if ($errors->has('captcha'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                        <strong>{{ $errors->first('captcha') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -45,12 +45,13 @@
 
                                 <div class="col-md-9">
                                     <input id = "name" placeholder="Password" name="password" type="password" tabindex="3" required>
-
+                                    <ul style="margin-top: -20px;"><li>At least 8 characters</li><br><li>Symbols of different registers</li><br><li>At least one digit</li><br><li>At least one special character: !$#%</li></ul>
                                     @if ($errors->has('password'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                     @endif
+
                                 </div>
                             </div>
                         </div>
@@ -92,6 +93,22 @@
                                     @endif
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
+                            <label for="captcha" class="col-md-3 control-label">Captcha</label>
+                            <div class="col-md-9">
+                                @php
+                                    echo captcha_img()
+                                @endphp
+                                <input  id="captcha" type="text" class="form-control" name="captcha">
+
+                                @if ($errors->has('captcha'))
+                                    <span class="help-block">
+                                        <strong>Incorrectly typed code from the pictureincorrectly typed code from the picture</strong>
+                                    </span>
+                                @endif
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="address col-md-offset-5 col-md-4">
