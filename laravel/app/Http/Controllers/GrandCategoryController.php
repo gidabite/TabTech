@@ -29,7 +29,7 @@ class GrandCategoryController extends Controller
      */
     public function create()
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             return view('home.grandcategories.create');
         } else return redirect()->route('home');
     }
@@ -42,7 +42,7 @@ class GrandCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             Validator::make($request->all(), [
                 'name' => 'required|filled|string|max:255',
                 'description' => 'required|filled|string',
@@ -85,7 +85,7 @@ class GrandCategoryController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             $grandcategory = Grandcategory::find($id);
             if ($grandcategory != null) {
                 return view('home.grandcategories.edit', ['id' => $grandcategory->id, 'name' => $grandcategory->name, 'description' => $grandcategory->description]);
@@ -103,7 +103,7 @@ class GrandCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
                     $grandcategory = Grandcategory::find($id);
                     if ($grandcategory != null) {
                         $grandcategory->name = Input::get('name');
@@ -124,7 +124,7 @@ class GrandCategoryController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin) {
+        if (Auth::check() && Auth::user()->isManager) {
             $grandcategory = Grandcategory::find($id);
             if ($grandcategory != null) {
                 $grandcategory->delete();

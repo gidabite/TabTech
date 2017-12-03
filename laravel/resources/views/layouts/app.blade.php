@@ -92,7 +92,7 @@
                                 <div class="row">
                                     @foreach(DB::table('grandcategories')->pluck('name', 'id') as $id => $name)
                                         <div class="col1 me-one">
-                                            <h4>{{$name}}</h4>
+                                            <a href="/products?category_search=All&q={{$name}}" style = " text-decoration: none; "><h4>{{$name}}</h4></a>
                                             <ul>
                                                 @php
                                                     $subs_id = DB::table('grand_sub_categories')->where('id_grand', $id)->pluck('id_sub');

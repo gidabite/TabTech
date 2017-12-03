@@ -54,6 +54,12 @@ Route::get('/ajaxstars', function () {
     abort(404);
 });
 
+Route::post('/ajaxmanager', 'AjaxController@manager')->name('ajaxmanager');
+Route::get('/ajaxmanager', function () {
+    abort(404);
+});
+
+
 Route::post('/add','ShoppingController@add')->name('add');
 Route::get('/add', function () {
     abort(404);

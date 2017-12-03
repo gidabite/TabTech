@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             return view('home.categories.create');
         } else return redirect()->route('home');
     }
@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             if (Input::get('name') != "" && Input::get('grandcategory')) {
                 $i = 0;
                 $char = (array)null;
@@ -98,7 +98,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin) {
+        if (Auth::check() && Auth::user()->isManager) {
             $category = Category::find($id);
             if ($category != null){
                 $id_grand = DB::table('grand_sub_categories')->select('id_grand')->where('id_sub', $id)->first()->id_grand;
@@ -121,7 +121,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             $category = Category::find($id);
             if ($category != null && $id != 1) {
                 $characteristics = json_decode($category->json_characteristics);
@@ -140,7 +140,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             if (Input::get('name') != "" && Input::get('grandcategory')) {
                 $i = 0;
                 $char = (array)null;
@@ -195,7 +195,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin) {
+        if (Auth::check() && Auth::user()->isManager) {
             $category = Category::find($id);
             if ($category != null && $id != 1) {
                 $category->delete();

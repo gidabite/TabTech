@@ -651,7 +651,8 @@ figure.effect-bubba:hover p,figure.effect-bubba:hover h2 {
 .product-bottom {
     text-align: left;
     margin-top: 20px;
-    padding-left: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
 }
 .product-bottom p {
 	font-size: 12px;
@@ -659,8 +660,8 @@ figure.effect-bubba:hover p,figure.effect-bubba:hover h2 {
     margin: 5px 0 0 0;
     text-transform: uppercase;
 }
-.product-one:nth-child(2){
-	margin-top:30px;
+.product-one{
+	margin-bottom:30px;
 }
 img.zoom-img {
     -webkit-transform: scale(1, 1);

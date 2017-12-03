@@ -27,11 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->isAdmin) {
+        if (Auth::user()->isManager) {
+            return view('home.manager');
+        } else if (Auth::user()->isAdmin){
             return view('home.admin');
-        } else {
+        } else
             return view('home.user');
-        }
     }
 
     public function update(Request $request){

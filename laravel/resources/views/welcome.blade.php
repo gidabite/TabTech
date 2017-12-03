@@ -119,34 +119,35 @@
                 });
             });
         </script>
-    </div>
-    <!--about-starts-->
-    <div class="about">
-        <div class="container">
-            <div class="about-top grid-1">
-                @php
-                $i = 0
-                @endphp
-                @foreach(DB::table('grandcategories')->limit(3)->pluck('name', 'description') as  $description => $name )
-                    @php
-                        $i++;
-                    @endphp
 
-                <a href="/products?category_search=All&q={{$name}}">
-                    <div class="col-md-4 about-left">
-                        <figure class="effect-bubba">
-                            <img class="img-responsive" src="images/abt-{{$i}}.jpg" alt=""/>
-                            <figcaption>
-                                <h2>{{$name}}</h2>
-                                <p>{{$description}}</p>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </a>
-                @endforeach
-                <div class="clearfix"></div>
+        <div class="about">
+            <div class="container">
+                <div class="about-top grid-1">
+                    @php
+                        $i = 0
+                    @endphp
+                    @foreach(DB::table('grandcategories')->limit(3)->pluck('name', 'description') as  $description => $name )
+                        @php
+                            $i++;
+                        @endphp
+
+                        <a href="/products?category_search=All&q={{$name}}">
+                            <div class="col-md-4 about-left">
+                                <figure class="effect-bubba">
+                                    <img class="img-responsive" src="images/abt-{{$i}}.jpg" alt=""/>
+                                    <figcaption>
+                                        <h2>{{$name}}</h2>
+                                        <p>{{$description}}</p>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </a>
+                    @endforeach
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
     </div>
+    <!--about-starts-->
     <!--about-end-->
 @endsection

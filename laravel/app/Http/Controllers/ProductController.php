@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             return view('home.products.create');
         } else return redirect()->route('home');
     }
@@ -53,7 +53,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             Validator::make($request->all(), [
                 'name' => 'required|filled|string|max:255',
                 'price' => 'required|filled|numeric|between:0,9999999.99',
@@ -143,7 +143,7 @@ class ProductController extends Controller
                     'stars' => $stars
                 ]);
             } else {
-                if (Auth::check() && Auth::user()->isAdmin)
+                if (Auth::check() && Auth::user()->isManager)
                     Session::flash('message', 'Product #s'.$id.' has errors! Update it!');
             }
         return redirect()->back();
@@ -157,7 +157,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             $product = Product::find($id);
             if ($product != null) {
                 $characteristics = json_decode($product->json_characteristics);
@@ -186,7 +186,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->isAdmin){
+        if (Auth::check() && Auth::user()->isManager){
             Validator::make($request->all(), [
                 'name' => 'required|filled|string|max:255',
                 'price' => 'required|filled|numeric|between:0,9999999.99',
@@ -253,7 +253,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin) {
+        if (Auth::check() && Auth::user()->isManager) {
             $product = Product::find($id);
             if ($product != null) {
                 $p = false;
