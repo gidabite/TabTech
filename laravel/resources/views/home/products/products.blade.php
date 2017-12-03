@@ -82,7 +82,10 @@
                                 }
                             });
                             $('h3',this).height(highestBox);
-                            $('img',this).height(highestBox2);
+                            $('img', this).each(function(){
+                                $(this).css('margin-top', (highestBox2-$(this).height())/2);
+                                $(this).css('margin-bottom', (highestBox2-$(this).height())/2);
+                            });
                         });
                     });
                 </script>
