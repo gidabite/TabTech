@@ -100,7 +100,7 @@ class ProductController extends Controller
                             $file = $request->file('image'.$i);
                             $destinationPath = public_path('images/products/' . $product->id . '/');
                             $ext = $file->extension();
-                            $path = $file->move($destinationPath, $count_img . '.' . $ext);
+                            $path = $file->move($destinationPath, $i . '.' . $ext);
                             $product['src_img_'.$i] = '/images/products/' .  $product->id . '/' . $i . '.' . $ext;
                         }
                     }
@@ -233,7 +233,7 @@ class ProductController extends Controller
                             $file = $request->file('image'.$i);
                             $destinationPath = public_path('images/products/' . $id . '/');
                             $ext = $file->extension();
-                            $path = $file->move($destinationPath, $count_img . '.' . $ext);
+                            $path = $file->move($destinationPath, $i . '.' . $ext);
                             $product['src_img_'.$i] = '/images/products/' . $id . '/' . $i . '.' . $ext;
                         }
                     }
