@@ -12,7 +12,7 @@
                     <div class="panel-body">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <h4>Categories</h4>
+                                <h4>Users</h4>
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
