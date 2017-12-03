@@ -199,6 +199,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
             if ($category != null && $id != 1) {
                 $category->delete();
+                DB::table('grand_sub_categories')->where('id_sub', $id)->delete();
                 Session::flash('message', 'Subcategory successfully deleted!');
             }
         }
