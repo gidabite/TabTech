@@ -132,7 +132,7 @@
                         $i++;
                     @endphp
 
-                <a href="/products?category_search={{$name}}">
+                <a href="/products?category_search=All&q={{$name}}">
                     <div class="col-md-4 about-left">
                         <figure class="effect-bubba">
                             <img class="img-responsive" src="images/abt-{{$i}}.jpg" alt=""/>

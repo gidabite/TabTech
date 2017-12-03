@@ -16,13 +16,16 @@ class Product extends Model
          * @var array
          */
         'columns' => [
-            'products.name' => 10,
+            'products.name' => 20,
             'products.description' => 10,
-            'products.json_characteristics' => 10,
-            'categories.name' => 10
+            'products.json_characteristics' => 20,
+            'categories.name' => 20,
+            'grandcategories.name' => 10,
         ],
         'joins' => [
             'categories' => ['products.category','categories.name'],
+            'grand_sub_categories' => ['grand_sub_categories.id_sub', 'categories.id'],
+            'grandcategories' => ['grandcategories.id', 'grand_sub_categories.id_grand' ],
         ],
     ];
     protected $fillable = [
